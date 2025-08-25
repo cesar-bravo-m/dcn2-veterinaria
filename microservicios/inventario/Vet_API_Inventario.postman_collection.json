@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "vet-api-inventario-collection",
+		"name": "Vet API Inventario",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Inventory Items",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/inventario",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"inventario"
+					]
+				},
+				"description": "Retrieve all inventory items from the database"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Inventory Item by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/inventario/{{inventarioId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"inventario",
+						"{{inventarioId}}"
+					]
+				},
+				"description": "Retrieve a specific inventory item by its ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Inventory Item",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"inventarioTipoId\": 1,\n    \"nombre\": \"Sample Product\",\n    \"medidaUnidadId\": 1,\n    \"stock\": 100,\n    \"usuarioId\": 1\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/inventario",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"inventario"
+					]
+				},
+				"description": "Create a new inventory item"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Inventory Item",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"inventarioTipoId\": 1,\n    \"nombre\": \"Updated Product Name\",\n    \"medidaUnidadId\": 1,\n    \"stock\": 150,\n    \"usuarioId\": 1\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/inventario/{{inventarioId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"inventario",
+						"{{inventarioId}}"
+					]
+				},
+				"description": "Update an existing inventory item by ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Inventory Item",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/inventario/{{inventarioId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"inventario",
+						"{{inventarioId}}"
+					]
+				},
+				"description": "Delete an inventory item by ID"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8081",
+			"type": "string"
+		},
+		{
+			"key": "inventarioId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}

@@ -1,8 +1,8 @@
 {
 	"info": {
 		"_postman_id": "vet-medical-history-api",
-		"name": "Vet Medical History API",
-		"description": "API collection for managing veterinary medical records (historial clínico). This API allows you to create, read, update, and delete medical records for pets.",
+		"name": "Vet Historial Clínico API",
+		"description": "",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
