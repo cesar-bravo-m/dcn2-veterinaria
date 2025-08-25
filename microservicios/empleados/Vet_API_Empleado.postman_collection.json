@@ -1,0 +1,173 @@
+{
+	"info": {
+		"_postman_id": "vet-api-empleado-collection",
+		"name": "Vet API Empleado",
+		"description": "Collection for the Employee Microservice API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Employees",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/empleado",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"empleado"
+					]
+				},
+				"description": "Retrieve all employees from the database"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Employee by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/empleado/{{empleadoId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"empleado",
+						"{{empleadoId}}"
+					]
+				},
+				"description": "Retrieve a specific employee by their ID"
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Employee",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombres\": \"Juan Carlos\",\n  \"paterno\": \"González\",\n  \"materno\": \"López\",\n  \"rut\": \"12345678-9\",\n  \"cargoId\": 1,\n  \"pacienteFlag\": false,\n  \"functionarioFlag\": true,\n  \"registroFecha\": \"2024-01-15T10:30:00\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/empleado",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"empleado"
+					]
+				},
+				"description": "Create a new employee record"
+			},
+			"response": []
+		},
+		{
+			"name": "Update Employee",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"nombres\": \"María Elena\",\n  \"paterno\": \"Rodríguez\",\n  \"materno\": \"Silva\",\n  \"rut\": \"98765432-1\",\n  \"cargoId\": 2,\n  \"pacienteFlag\": false,\n  \"functionarioFlag\": true,\n  \"registroFecha\": \"2024-01-15T14:45:00\"\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/empleado/{{empleadoId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"empleado",
+						"{{empleadoId}}"
+					]
+				},
+				"description": "Update an existing employee record"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Employee",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/empleado/{{empleadoId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"empleado",
+						"{{empleadoId}}"
+					]
+				},
+				"description": "Delete an employee record by ID"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8084",
+			"type": "string"
+		},
+		{
+			"key": "empleadoId",
+			"value": "1",
+			"type": "string"
+		}
+	]
+}
