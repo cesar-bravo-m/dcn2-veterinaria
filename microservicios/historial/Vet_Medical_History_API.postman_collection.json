@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "vet-medical-history-api",
+		"name": "Vet Medical History API",
+		"description": "API collection for managing veterinary medical records (historial clínico). This API allows you to create, read, update, and delete medical records for pets.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get All Medical Records",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/historial",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"historial"
+					]
+				},
+				"description": "Retrieve all medical records from the database. Returns a list of all historial records."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Medical Record by ID",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/historial/{{historialId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"historial",
+						"{{historialId}}"
+					]
+				},
+				"description": "Retrieve a specific medical record by its ID. Returns the historial record if found, null otherwise."
+			},
+			"response": []
+		},
+		{
+			"name": "Create New Medical Record",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"mascotaId\": 1,\n  \"inventarioId\": 1,\n  \"cantidad\": 10,\n  \"dosisCantidad\": 2,\n  \"registroFecha\": \"2024-01-15\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/historial",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"historial"
+					]
+				},
+				"description": "Create a new medical record. The historialId will be auto-generated. Returns the created historial record."
+			},
+			"response": []
+		},
+		{
+			"name": "Update Medical Record",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"mascotaId\": 1,\n  \"inventarioId\": 1,\n  \"cantidad\": 15,\n  \"dosisCantidad\": 3,\n  \"registroFecha\": \"2024-01-20\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/historial/{{historialId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"historial",
+						"{{historialId}}"
+					]
+				},
+				"description": "Update an existing medical record by ID. Returns the updated historial record if found, null otherwise."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Medical Record",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/api/historial/{{historialId}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"historial",
+						"{{historialId}}"
+					]
+				},
+				"description": "Delete a medical record by ID. Returns no content on successful deletion."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://localhost:8082",
+			"type": "string",
+			"description": "Base URL for the API server"
+		},
+		{
+			"key": "historialId",
+			"value": "1",
+			"type": "string",
+			"description": "ID of a medical record for testing specific operations"
+		}
+	]
+}
