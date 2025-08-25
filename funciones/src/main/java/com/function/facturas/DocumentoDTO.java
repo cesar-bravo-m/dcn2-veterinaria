@@ -1,4 +1,4 @@
-package com.function;
+package com.function.facturas;
 
 import java.time.LocalDateTime;
 

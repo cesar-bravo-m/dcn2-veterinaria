@@ -1,4 +1,4 @@
-package com.function;
+package com.function.comunicacion;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,16 +16,16 @@ import com.microsoft.azure.functions.annotation.HttpTrigger;
 
 public class Function {
     
-    private final DatabaseService databaseService;
     private final ObjectMapper objectMapper;
+    private final DatabaseService databaseService;
     
     public Function() {
-        this.databaseService = new DatabaseService();
         this.objectMapper = new ObjectMapper();
         this.objectMapper.registerModule(new JavaTimeModule());
+        this.databaseService = new DatabaseService();
     }
     
-    @FunctionName("Facturas")
+    @FunctionName("Comunicacion")
     public HttpResponseMessage run(
             @HttpTrigger(
                 name = "req",
@@ -33,7 +33,7 @@ public class Function {
                 authLevel = AuthorizationLevel.ANONYMOUS)
                 HttpRequestMessage<Optional<String>> request,
             final ExecutionContext context) {
-        context.getLogger().info("Procesando solicitud HTTP de Java.");
+        context.getLogger().info("Procesando solicitud HTTP de Java para Comunicacion.");
 
         try {
             if (!databaseService.testConnection()) {
@@ -74,36 +74,63 @@ public class Function {
     private HttpResponseMessage handleGet(HttpRequestMessage<Optional<String>> request, 
                                         ExecutionContext context) throws Exception {
         String idParam = request.getQueryParameters().get("id");
+        String clienteIdParam = request.getQueryParameters().get("cliente_id");
+        String estadoParam = request.getQueryParameters().get("estado");
         
-        if (idParam == null || idParam.isEmpty()) {
-            List<DocumentoDTO> documentos = databaseService.getAllDocumentos();
-            context.getLogger().info("Recuperados " + documentos.size() + " documentos de la base de datos");
-            
-            String jsonResponse = objectMapper.writeValueAsString(documentos);
-            return request.createResponseBuilder(HttpStatus.OK)
-                .header("Content-Type", "application/json")
-                .body(jsonResponse)
-                .build();
-        }
-        
-        try {
-            Long documentoId = Long.parseLong(idParam);
-            DocumentoDTO documento = databaseService.getDocumentoById(documentoId);
-            
-            if (documento != null) {
-                String jsonResponse = objectMapper.writeValueAsString(documento);
+        if (idParam != null && !idParam.isEmpty()) {
+            try {
+                Long mensajeId = Long.parseLong(idParam);
+                MensajeDTO mensaje = databaseService.getMensajeById(mensajeId);
+                
+                if (mensaje != null) {
+                    String jsonResponse = objectMapper.writeValueAsString(mensaje);
+                    return request.createResponseBuilder(HttpStatus.OK)
+                        .header("Content-Type", "application/json")
+                        .body(jsonResponse)
+                        .build();
+                } else {
+                    return request.createResponseBuilder(HttpStatus.NOT_FOUND)
+                        .body("Mensaje no encontrado con ID: " + mensajeId)
+                        .build();
+                }
+            } catch (NumberFormatException e) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("Formato de ID de mensaje inválido")
+                    .build();
+            }
+        } else if (clienteIdParam != null && !clienteIdParam.isEmpty()) {
+            try {
+                Long clienteId = Long.parseLong(clienteIdParam);
+                List<MensajeDTO> mensajes = databaseService.getMensajesByClienteId(clienteId);
+                context.getLogger().info("Recuperados " + mensajes.size() + " mensajes del cliente " + clienteId);
+                
+                String jsonResponse = objectMapper.writeValueAsString(mensajes);
                 return request.createResponseBuilder(HttpStatus.OK)
                     .header("Content-Type", "application/json")
                     .body(jsonResponse)
                     .build();
-            } else {
-                return request.createResponseBuilder(HttpStatus.NOT_FOUND)
-                    .body("Documento no encontrado con ID: " + documentoId)
+            } catch (NumberFormatException e) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("Formato de ID de cliente inválido")
                     .build();
             }
-        } catch (NumberFormatException e) {
-            return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                .body("Formato de ID de documento inválido")
+        } else if (estadoParam != null && !estadoParam.isEmpty()) {
+            List<MensajeDTO> mensajes = databaseService.getMensajesByEstado(estadoParam);
+            context.getLogger().info("Recuperados " + mensajes.size() + " mensajes con estado: " + estadoParam);
+            
+            String jsonResponse = objectMapper.writeValueAsString(mensajes);
+            return request.createResponseBuilder(HttpStatus.OK)
+                .header("Content-Type", "application/json")
+                .body(jsonResponse)
+                .build();
+        } else {
+            List<MensajeDTO> mensajes = databaseService.getAllMensajes();
+            context.getLogger().info("Recuperados " + mensajes.size() + " mensajes de la base de datos");
+            
+            String jsonResponse = objectMapper.writeValueAsString(mensajes);
+            return request.createResponseBuilder(HttpStatus.OK)
+                .header("Content-Type", "application/json")
+                .body(jsonResponse)
                 .build();
         }
     }
@@ -118,23 +145,32 @@ public class Function {
         }
         
         try {
-            DocumentoDTO documento = objectMapper.readValue(body.get(), DocumentoDTO.class);
+            MensajeDTO mensaje = objectMapper.readValue(body.get(), MensajeDTO.class);
             
-            if (documento.getRegistroFecha() == null) {
-                documento.setRegistroFecha(java.time.LocalDateTime.now());
+            // Validate required fields
+            if (mensaje.getClienteId() == null) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("cliente_id es requerido")
+                    .build();
             }
             
-            DocumentoDTO createdDocumento = databaseService.createDocumento(documento);
+            if (mensaje.getContenido() == null || mensaje.getContenido().trim().isEmpty()) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("contenido es requerido")
+                    .build();
+            }
             
-            if (createdDocumento != null) {
-                String jsonResponse = objectMapper.writeValueAsString(createdDocumento);
+            MensajeDTO createdMensaje = databaseService.createMensaje(mensaje);
+            
+            if (createdMensaje != null) {
+                String jsonResponse = objectMapper.writeValueAsString(createdMensaje);
                 return request.createResponseBuilder(HttpStatus.CREATED)
                     .header("Content-Type", "application/json")
                     .body(jsonResponse)
                     .build();
             } else {
                 return request.createResponseBuilder(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error al crear documento")
+                    .body("Error al crear mensaje")
                     .build();
             }
         } catch (Exception e) {
@@ -150,12 +186,12 @@ public class Function {
         
         if (idParam == null || idParam.isEmpty()) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                .body("PUT requiere ID de documento en parámetro de consulta: ?id={id}")
+                .body("PUT requiere ID en parámetro de consulta: ?id={id}")
                 .build();
         }
         
         try {
-            Long documentoId = Long.parseLong(idParam);
+            Long mensajeId = Long.parseLong(idParam);
             Optional<String> body = request.getBody();
             
             if (!body.isPresent()) {
@@ -164,26 +200,45 @@ public class Function {
                     .build();
             }
             
-            DocumentoDTO documento = objectMapper.readValue(body.get(), DocumentoDTO.class);
-            documento.setDocumentoId(documentoId);
+            MensajeDTO mensaje = objectMapper.readValue(body.get(), MensajeDTO.class);
+            mensaje.setMensajeId(mensajeId);
             
-            boolean updated = databaseService.updateDocumento(documento);
+            // Validate required fields
+            if (mensaje.getClienteId() == null) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("cliente_id es requerido")
+                    .build();
+            }
+            
+            if (mensaje.getContenido() == null || mensaje.getContenido().trim().isEmpty()) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("contenido es requerido")
+                    .build();
+            }
+            
+            if (mensaje.getEstado() == null || mensaje.getEstado().trim().isEmpty()) {
+                return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
+                    .body("estado es requerido")
+                    .build();
+            }
+            
+            boolean updated = databaseService.updateMensaje(mensaje);
             
             if (updated) {
-                DocumentoDTO updatedDocumento = databaseService.getDocumentoById(documentoId);
-                String jsonResponse = objectMapper.writeValueAsString(updatedDocumento);
+                MensajeDTO updatedMensaje = databaseService.getMensajeById(mensajeId);
+                String jsonResponse = objectMapper.writeValueAsString(updatedMensaje);
                 return request.createResponseBuilder(HttpStatus.OK)
                     .header("Content-Type", "application/json")
                     .body(jsonResponse)
                     .build();
             } else {
                 return request.createResponseBuilder(HttpStatus.NOT_FOUND)
-                    .body("Documento no encontrado con ID: " + documentoId)
+                    .body("Mensaje no encontrado con ID: " + mensajeId)
                     .build();
             }
         } catch (NumberFormatException e) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                .body("Formato de ID de documento inválido")
+                .body("Formato de ID de mensaje inválido")
                 .build();
         } catch (Exception e) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
@@ -198,26 +253,26 @@ public class Function {
         
         if (idParam == null || idParam.isEmpty()) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                .body("DELETE requiere ID de documento en parámetro de consulta: ?id={id}")
+                .body("DELETE requiere ID en parámetro de consulta: ?id={id}")
                 .build();
         }
         
         try {
-            Long documentoId = Long.parseLong(idParam);
-            boolean deleted = databaseService.deleteDocumento(documentoId);
+            Long mensajeId = Long.parseLong(idParam);
+            boolean deleted = databaseService.deleteMensaje(mensajeId);
             
             if (deleted) {
                 return request.createResponseBuilder(HttpStatus.NO_CONTENT)
-                    .body("Documento eliminado exitosamente")
+                    .body("Mensaje eliminado exitosamente")
                     .build();
             } else {
                 return request.createResponseBuilder(HttpStatus.NOT_FOUND)
-                    .body("Documento no encontrado con ID: " + documentoId)
+                    .body("Mensaje no encontrado con ID: " + mensajeId)
                     .build();
             }
         } catch (NumberFormatException e) {
             return request.createResponseBuilder(HttpStatus.BAD_REQUEST)
-                .body("Formato de ID de documento inválido")
+                .body("Formato de ID de mensaje inválido")
                 .build();
         }
     }
