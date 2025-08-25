@@ -1,5 +1,7 @@
 package com.grupo10.vet_api_agenda.model;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -20,13 +22,13 @@ public class Agenda {
     @Column(name = "mascota_id")
     private Long mascotaId;
     @Column(name = "fecha")
-    private Long fecha;
+    private LocalDateTime fecha;
     @Column(name = "nulo_flag")
-    private Long nuloFlag;
+    private boolean nuloFlag;
     @Column(name = "nulo_fecha")
-    private Long nuloFecha;
+    private LocalDateTime nuloFecha;
     @Column(name = "registro_fecha")
-    private Long registroFecha;
+    private LocalDateTime registroFecha;
     @Column(name = "usuario_id")
     private Long usuarioId;
 
@@ -42,28 +44,28 @@ public class Agenda {
     public void setMascotaId(Long mascotaId) {
         this.mascotaId = mascotaId;
     }
-    public Long getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
-    public void setFecha(Long fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
-    public Long getNuloFlag() {
+    public boolean getNuloFlag() {
         return nuloFlag;
     }
-    public void setNuloFlag(Long nuloFlag) {
+    public void setNuloFlag(boolean nuloFlag) {
         this.nuloFlag = nuloFlag;
     }
-    public Long getNuloFecha() {
+    public LocalDateTime getNuloFecha() {
         return nuloFecha;
     }
-    public void setNuloFecha(Long nuloFecha) {
+    public void setNuloFecha(LocalDateTime nuloFecha) {
         this.nuloFecha = nuloFecha;
     }
-    public Long getRegistroFecha() {
+    public LocalDateTime getRegistroFecha() {
         return registroFecha;
     }
-    public void setRegistroFecha(Long registroFecha) {
+    public void setRegistroFecha(LocalDateTime registroFecha) {
         this.registroFecha = registroFecha;
     }
     public Long getUsuarioId() {
