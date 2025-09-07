@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DatabaseService {
     
-    private static final String DB_URL = "jdbc:postgresql://192.168.1.98:5432/postgres";
+    private static final String DB_URL = "jdbc:postgresql://sibio.ddns.net:5432/postgres";
     private static final String DB_USER = "nathan";
     private static final String DB_PASSWORD = "lulu$2025";
     
@@ -49,8 +49,8 @@ public class DatabaseService {
     }
     
     public ClienteDTO createCliente(ClienteDTO cliente) throws SQLException {
-        String sql = "INSERT INTO clientes (nombre, paterno, materno, rut) " +
-                    "VALUES (?, ?, ?, ?) RETURNING cliente_id";
+        String sql = "INSERT INTO clientes (cliente_id, nombre, paterno, materno, rut) " +
+                    "VALUES (nextval('clientes_cliente_id_seq'), ?, ?, ?, ?) RETURNING cliente_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

@@ -1,108 +1,72 @@
 package com.function.clientes;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
-
-import com.microsoft.azure.functions.HttpMethod;
-import com.microsoft.azure.functions.HttpRequestMessage;
-import com.microsoft.azure.functions.HttpResponseMessage;
-import com.microsoft.azure.functions.HttpStatus;
-import com.microsoft.azure.functions.annotation.AuthorizationLevel;
-import com.microsoft.azure.functions.annotation.FunctionName;
-import com.microsoft.azure.functions.annotation.HttpTrigger;
-
-import graphql.ExecutionInput;
 import graphql.GraphQL;
-import com.microsoft.azure.functions.ExecutionContext;
-import graphql.schema.DataFetcher;
-import graphql.schema.GraphQLList;
-import graphql.schema.GraphQLObjectType;
+import graphql.schema.GraphQLSchema;
+import graphql.schema.idl.RuntimeWiring;
+import graphql.schema.idl.SchemaGenerator;
+import graphql.schema.idl.SchemaParser;
+import graphql.schema.idl.TypeDefinitionRegistry;
 
-@SuppressWarnings("deprecation")
+import java.io.InputStreamReader;
+
 public class ClienteGraphQL {
 
-    private static GraphQL graphQL;
+    private final DatabaseService databaseService = new DatabaseService();
+    private GraphQL graphQL;
 
-    static {
-
-        var clienteType = GraphQLObjectType.newObject()
-                .name("Cliente")
-                .field(field -> field
-                        .name("cliente_id")
-                        .type(graphql.Scalars.GraphQLID))
-                .field(field -> field
-                        .name("nombre")
-                        .type(graphql.Scalars.GraphQLString))
-                .field(field -> field
-                        .name("paterno")
-                        .type(graphql.Scalars.GraphQLString))
-                .field(field -> field
-                        .name("materno")
-                        .type(graphql.Scalars.GraphQLString))
-                .field(field -> field
-                        .name("rut")
-                        .type(graphql.Scalars.GraphQLString))
-                .build();
-
-        // recuperación de clientes
-        DatabaseService clienteService = new DatabaseService();
-        DataFetcher<List<ClienteDTO>> clientesDataFetcher = environment -> {
-            String id = environment.getArgument("id");
-            return clienteService.getAllClientes().stream()
-                    .filter(c -> c.getClienteId().toString().equals(id))
-                    .collect(Collectors.toList());
-
-        };
-
-        var queryType = GraphQLObjectType.newObject()
-            .name("Query")
-            .field(field -> field
-                    .name("clientes")
-                    .type(new GraphQLList(clienteType))
-                    .argument(arg -> arg
-                            .name("id")
-                            .type(graphql.Scalars.GraphQLID))
-                    .dataFetcher(clientesDataFetcher))
-            .build();
-
-        var schema = graphql.schema.GraphQLSchema.newSchema()
-            .query(queryType)
-            .build();
-
-        graphQL = GraphQL.newGraphQL(schema).build();
-
+    public ClienteGraphQL() {
+        init();
     }
 
-    @FunctionName("graphqlClientes")
-    public HttpResponseMessage run(
-        @HttpTrigger(
-            name = "req",
-            methods = { HttpMethod.POST },
-            authLevel = AuthorizationLevel.ANONYMOUS)
-        HttpRequestMessage<Optional<Map<String, Object>>> request,
-        final ExecutionContext context) {
+    private void init() {
+        // 1. Cargar el archivo schema.graphqls desde /resources
+        InputStreamReader reader = new InputStreamReader(
+                getClass().getResourceAsStream("/schema.graphqls")
+        );
+        TypeDefinitionRegistry typeRegistry = new SchemaParser().parse(reader);
 
-        context.getLogger().info("GraphQL request received.");
-
-        // Obtener el body del request
-        Map<String, Object> body = request.getBody().orElse(new HashMap<>());
-
-        // GraphQL usualmente manda "query" en el body
-        String query = (String) body.get("query");
-
-        ExecutionInput executionInput = ExecutionInput.newExecutionInput()
-                .query(query)
+        // 2. Definir resolvers (queries y mutations)
+        RuntimeWiring wiring = RuntimeWiring.newRuntimeWiring()
+                .type("Query", builder -> builder
+                        .dataFetcher("clientes", env -> databaseService.getAllClientes())
+                        .dataFetcher("clienteById", env -> {
+                            Long id = Long.parseLong(env.getArgument("id"));
+                            return databaseService.getClienteById(id);
+                        })
+                )
+                .type("Mutation", builder -> builder
+                        .dataFetcher("createCliente", env -> {
+                            ClienteDTO cliente = new ClienteDTO();
+                            cliente.setNombre(env.getArgument("nombre"));
+                            cliente.setPaterno(env.getArgument("paterno"));
+                            cliente.setMaterno(env.getArgument("materno"));
+                            cliente.setRut(env.getArgument("rut"));
+                            return databaseService.createCliente(cliente);
+                        })
+                        .dataFetcher("updateCliente", env -> {
+                            ClienteDTO cliente = new ClienteDTO();
+                            cliente.setClienteId(Long.parseLong(env.getArgument("clienteId")));
+                            cliente.setNombre(env.getArgument("nombre"));
+                            cliente.setPaterno(env.getArgument("paterno"));
+                            cliente.setMaterno(env.getArgument("materno"));
+                            cliente.setRut(env.getArgument("rut"));
+                            return databaseService.updateCliente(cliente);
+                        })
+                        .dataFetcher("deleteCliente", env -> {
+                            Long id = Long.parseLong(env.getArgument("clienteId"));
+                            return databaseService.deleteCliente(id);
+                        })
+                )
                 .build();
 
-        Map<String, Object> result = graphQL.execute(executionInput).toSpecification();
+        // 3. Crear GraphQLSchema uniendo typeRegistry y wiring
+        GraphQLSchema schema = new SchemaGenerator().makeExecutableSchema(typeRegistry, wiring);
 
-        return request.createResponseBuilder(HttpStatus.OK)
-                .body(result)
-                .build();
+        // 4. Inicializar el motor GraphQL
+        this.graphQL = GraphQL.newGraphQL(schema).build();
     }
 
-
+    public GraphQL getGraphQL() {
+        return graphQL;
+    }
 }
