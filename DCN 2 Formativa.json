@@ -290,7 +290,7 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{functions_url}}/Mascotas?id=1",
+									"raw": "{{functions_url}}/api/Mascotas?id=1",
 									"host": [
 										"{{functions_url}}"
 									],
