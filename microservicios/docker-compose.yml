@@ -14,6 +14,8 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      - postgres
 
   # Historial Service - Port 8082
   historial:
@@ -30,6 +32,8 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      - postgres
 
   # Agenda Service - Port 8083
   agenda:
@@ -46,6 +50,8 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      - postgres
 
   # Empleados Service - Port 8084
   empleados:
@@ -62,10 +68,11 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      - postgres
 
   postgres:
-    image: postgres:15
-    container_name: postgres_duoc
+    image: postgres:17
     restart: unless-stopped
     environment:
       POSTGRES_USER: duoc
