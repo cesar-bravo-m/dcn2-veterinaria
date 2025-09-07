@@ -31,27 +31,30 @@ public class ClienteGraphQL {
         var clienteType = GraphQLObjectType.newObject()
                 .name("Cliente")
                 .field(field -> field
-                        .name("id")
+                        .name("cliente_id")
                         .type(graphql.Scalars.GraphQLID))
                 .field(field -> field
                         .name("nombre")
                         .type(graphql.Scalars.GraphQLString))
                 .field(field -> field
-                        .name("ubicacion")
+                        .name("paterno")
+                        .type(graphql.Scalars.GraphQLString))
+                .field(field -> field
+                        .name("materno")
+                        .type(graphql.Scalars.GraphQLString))
+                .field(field -> field
+                        .name("rut")
                         .type(graphql.Scalars.GraphQLString))
                 .build();
 
-        var clientes = List.of(
-            Map.of("id", "1", "nombre", "Cliente Central", "ubicacion", "Calle 123"),
-            Map.of("id", "2", "nombre", "Cliente Norte", "ubicacion",  "Avenida 456"),
-            Map.of("id", "3", "nombre", "Quinta", "ubicacion",  "Calle 123 321")
-        );
-
-        DataFetcher<List<Map<String, String>>> clientesDataFetcher = environment -> {
+        // recuperación de clientes
+        DatabaseService clienteService = new DatabaseService();
+        DataFetcher<List<ClienteDTO>> clientesDataFetcher = environment -> {
             String id = environment.getArgument("id");
-            return clientes.stream()
-                .filter(cliente -> cliente.get("id").equals(id))
-                .collect(Collectors.toList());
+            return clienteService.getAllClientes().stream()
+                    .filter(c -> c.getClienteId().toString().equals(id))
+                    .collect(Collectors.toList());
+
         };
 
         var queryType = GraphQLObjectType.newObject()
@@ -77,7 +80,7 @@ public class ClienteGraphQL {
     public HttpResponseMessage run(
         @HttpTrigger(
             name = "req",
-            methods = {HttpMethod.POST},
+            methods = { HttpMethod.POST },
             authLevel = AuthorizationLevel.ANONYMOUS)
         HttpRequestMessage<Optional<Map<String, Object>>> request,
         final ExecutionContext context) {
