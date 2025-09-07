@@ -15,7 +15,8 @@ services:
     networks:
       - vet-network
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   # Historial Service - Port 8082
   historial:
@@ -33,7 +34,8 @@ services:
     networks:
       - vet-network
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   # Agenda Service - Port 8083
   agenda:
@@ -51,7 +53,8 @@ services:
     networks:
       - vet-network
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   # Empleados Service - Port 8084
   empleados:
@@ -69,10 +72,12 @@ services:
     networks:
       - vet-network
     depends_on:
-      - postgres
+      postgres:
+        condition: service_healthy
 
   postgres:
     image: postgres:17
+    container_name: cloud2-postgres
     restart: unless-stopped
     environment:
       POSTGRES_USER: duoc
@@ -83,6 +88,13 @@ services:
       - ./esquema.sql:/docker-entrypoint-initdb.d/esquema.sql:ro
     ports:
       - "5432:5432"
+    networks:
+      - vet-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U duoc -d duoc"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   pgdata:
