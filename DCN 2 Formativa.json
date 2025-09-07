@@ -614,7 +614,7 @@
 			]
 		},
 		{
-			"name": "Spring Boot Microservices",
+			"name": "Microservicios",
 			"item": [
 				{
 					"name": "Empleados API",
@@ -627,7 +627,7 @@
 								"url": {
 									"raw": "{{microservices_url}}:8084/api/empleado",
 									"host": [
-										"{{microservices_url}}"
+										"{{microservices_url}}:8084"
 									],
 									"path": [
 										"api",
@@ -642,9 +642,9 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{microservices_url}}/api/empleado/1",
+									"raw": "{{microservices_url}}:8084/api/empleado/1",
 									"host": [
-										"{{microservices_url}}"
+										"{{microservices_url}}:8084"
 									],
 									"path": [
 										"api",
@@ -669,7 +669,7 @@
 									"raw": "{\n    \"nombres\": \"María\",\n    \"paterno\": \"González\",\n    \"materno\": \"López\",\n    \"rut\": \"98765432-1\",\n    \"cargoId\": 1,\n    \"pacienteFlag\": false,\n    \"funcionarioFlag\": true,\n    \"registroFecha\": \"2024-01-15T10:00:00\"\n}"
 								},
 								"url": {
-									"raw": "{{microservices_url}}/api/empleado",
+									"raw": "{{microservices_url}}:8084/api/empleado",
 									"host": [
 										"{{microservices_url}}:8084"
 									],
@@ -695,9 +695,9 @@
 									"raw": "{\n    \"nombres\": \"María José\",\n    \"paterno\": \"González\",\n    \"materno\": \"López\",\n    \"rut\": \"98765432-1\",\n    \"cargoId\": 2,\n    \"pacienteFlag\": false,\n    \"funcionarioFlag\": true,\n    \"registroFecha\": \"2024-01-15T10:00:00\"\n}"
 								},
 								"url": {
-									"raw": "{{microservices_url}}/api/empleado/1",
+									"raw": "{{microservices_url}}:8084/api/empleado/1",
 									"host": [
-										"{{microservices_url}}"
+										"{{microservices_url}}:8084"
 									],
 									"path": [
 										"api",
@@ -713,9 +713,9 @@
 								"method": "DELETE",
 								"header": [],
 								"url": {
-									"raw": "{{microservices_url}}/api/empleado/1",
+									"raw": "{{microservices_url}}:8084/api/empleado/1",
 									"host": [
-										"{{microservices_url}}"
+										"{{microservices_url}}:8084"
 									],
 									"path": [
 										"api",
