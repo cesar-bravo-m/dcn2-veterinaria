@@ -6,7 +6,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DB_HOST: ${DB_HOST:-20.81.232.159}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -22,7 +22,7 @@ services:
     ports:
       - "8082:8082"
     environment:
-      DB_HOST: ${DB_HOST:-20.81.232.159}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -38,7 +38,7 @@ services:
     ports:
       - "8083:8083"
     environment:
-      DB_HOST: ${DB_HOST:-20.81.232.159}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -54,7 +54,7 @@ services:
     ports:
       - "8084:8084"
     environment:
-      DB_HOST: ${DB_HOST:-20.81.232.159}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -62,6 +62,23 @@ services:
     restart: always
     networks:
       - vet-network
+
+  postgres:
+    image: postgres:15
+    container_name: postgres_duoc
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: duoc
+      POSTGRES_PASSWORD: 84oL4mK6cM8w7SK
+      POSTGRES_DB: duoc
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./esquema.sql:/docker-entrypoint-initdb.d/esquema.sql:ro
+    ports:
+      - "5432:5432"
+
+volumes:
+  pgdata:
 
 networks:
   vet-network:
