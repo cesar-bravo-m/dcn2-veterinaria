@@ -54,7 +54,7 @@ public class DatabaseService {
     }
     
     public DocumentoDTO createDocumento(DocumentoDTO documento) throws SQLException {
-        String sql = "INSERT INTO documento (documento_tipo_id, impuesto_id, documento_numero, " +
+        String sql = "INSERT INTO documentos (documento_tipo_id, impuesto_id, documento_numero, " +
                     "documento_fecha, registro_fecha, usuario_id) " +
                     "VALUES (?, ?, ?, ?, ?, ?) RETURNING documento_id";
         
@@ -85,7 +85,7 @@ public class DatabaseService {
     }
     
     public boolean updateDocumento(DocumentoDTO documento) throws SQLException {
-        String sql = "UPDATE documento SET documento_tipo_id = ?, impuesto_id = ?, " +
+        String sql = "UPDATE documentos SET documento_tipo_id = ?, impuesto_id = ?, " +
                     "documento_numero = ?, documento_fecha = ?, usuario_id = ? " +
                     "WHERE documento_id = ?";
         

@@ -236,7 +236,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"clienteId\": 1,\n    \"nombre\": \"Firulais\",\n    \"especie\": \"Perro\",\n    \"edad\": 3,\n    \"domestico\": true\n}"
+									"raw": "{\n    \"cliente_id\": 1,\n    \"nombre\": \"Firulais\",\n    \"especie\": \"Perro\",\n    \"edad\": 3,\n    \"domestico\": true\n}"
 								},
 								"url": {
 									"raw": "{{functions_url}}/api/Mascotas",
@@ -263,7 +263,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"mascotaId\": 1,\n    \"clienteId\": 1,\n    \"nombre\": \"Firulais Jr\",\n    \"especie\": \"Perro\",\n    \"edad\": 4,\n    \"domestico\": true\n}"
+									"raw": "{\n    \"mascota_id\": 1,\n    \"cliente_id\": 1,\n    \"nombre\": \"Firulais Jr\",\n    \"especie\": \"Perro\",\n    \"edad\": 4,\n    \"domestico\": true\n}"
 								},
 								"url": {
 									"raw": "{{functions_url}}/api/Mascotas?id=1",
@@ -295,6 +295,7 @@
 										"{{functions_url}}"
 									],
 									"path": [
+										"api",
 										"Mascotas"
 									],
 									"query": [
@@ -366,7 +367,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"mascotaId\": 1,\n    \"fecha\": \"2024-01-15T10:30:00\",\n    \"examen\": \"Hemograma\",\n    \"resultado\": \"Normal\",\n    \"valor\": 12.5,\n    \"unidad\": \"mg/dL\"\n}"
+									"raw": "{\n    \"mascota_id\": 1,\n    \"fecha\": \"2024-01-15T10:30:00\",\n    \"examen\": \"Hemograma\",\n    \"resultado\": \"Normal\",\n    \"valor\": 12.5,\n    \"unidad\": \"mg/dL\"\n}"
 								},
 								"url": {
 									"raw": "{{functions_url}}/api/Laboratorio",
@@ -393,16 +394,22 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"laboratorioId\": 1,\n    \"mascotaId\": 1,\n    \"fecha\": \"2024-01-15T10:30:00\",\n    \"examen\": \"Hemograma Completo\",\n    \"resultado\": \"Valores normales\",\n    \"valor\": 13.0,\n    \"unidad\": \"mg/dL\"\n}"
+									"raw": "{\n    \"laboratorio_id\": 1,\n    \"mascota_id\": 1,\n    \"fecha\": \"2024-01-15T10:30:00\",\n    \"examen\": \"Hemograma Completo\",\n    \"resultado\": \"Valores normales\",\n    \"valor\": 13.0,\n    \"unidad\": \"mg/dL\"\n}"
 								},
 								"url": {
-									"raw": "{{functions_url}}/api/Laboratorio",
+									"raw": "{{functions_url}}/api/Laboratorio?id=1",
 									"host": [
 										"{{functions_url}}"
 									],
 									"path": [
 										"api",
 										"Laboratorio"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
 									]
 								}
 							},
@@ -491,7 +498,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"clienteId\": 1,\n    \"fechaEnvio\": \"2024-01-15T14:30:00\",\n    \"contenido\": \"Recordatorio de cita veterinaria mañana a las 10:00 AM\",\n    \"estado\": \"ENVIADO\"\n}"
+									"raw": "{\n    \"cliente_id\": 1,\n    \"fecha_envio\": \"2024-01-15T14:30:00\",\n    \"contenido\": \"Recordatorio de cita veterinaria mañana a las 10:00 AM\",\n    \"estado\": \"ENVIADO\"\n}"
 								},
 								"url": {
 									"raw": "{{functions_url}}/api/Comunicacion",
@@ -518,7 +525,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"mensajeId\": 1,\n    \"clienteId\": 1,\n    \"fechaEnvio\": \"2024-01-15T14:30:00\",\n    \"contenido\": \"Recordatorio de cita veterinaria mañana a las 10:00 AM - CONFIRMADO\",\n    \"estado\": \"LEIDO\"\n}"
+									"raw": "{\n    \"mensaje_id\": 1,\n    \"cliente_id\": 1,\n    \"fecha_envio\": \"2024-01-15T14:30:00\",\n    \"contenido\": \"Recordatorio de cita veterinaria mañana a las 10:00 AM - CONFIRMADO\",\n    \"estado\": \"LEIDO\"\n}"
 								},
 								"url": {
 									"raw": "{{functions_url}}/api/Comunicacion?id=1",
@@ -622,7 +629,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"documentoTipoId\": 1,\n    \"impuestoId\": 1,\n    \"documentoNumero\": 12345,\n    \"documentoFecha\": \"2024-01-15T16:00:00\",\n    \"registroFecha\": \"2024-01-15T16:00:00\",\n    \"usuarioId\": 1\n}"
+									"raw": "{\n    \"documento_tipo_id\": 1,\n    \"impuesto_id\": 1,\n    \"documento_numero\": 12345,\n    \"documento_fecha\": \"2024-01-15T16:00:00\",\n    \"registro_fecha\": \"2024-01-15T16:00:00\",\n    \"usuario_id\": 1\n}"
 								},
 								"url": {
 									"raw": "{{functions_url}}/api/Facturas",
@@ -649,7 +656,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n    \"documentoId\": 1,\n    \"documentoTipoId\": 1,\n    \"impuestoId\": 1,\n    \"documentoNumero\": 12346,\n    \"documentoFecha\": \"2024-01-15T16:00:00\",\n    \"registroFecha\": \"2024-01-15T16:05:00\",\n    \"usuarioId\": 1\n}"
+									"raw": "{\n    \"documento_id\": 1,\n    \"documento_tipo_id\": 1,\n    \"impuesto_id\": 1,\n    \"documento_numero\": 12346,\n    \"documento_fecha\": \"2024-01-15T16:00:00\",\n    \"registro_fecha\": \"2024-01-15T16:05:00\",\n    \"usuario_id\": 1\n}"
 								},
 								"url": {
 									"raw": "{{functions_url}}/api/Facturas?id=1",
@@ -729,7 +736,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "{{microservices_url}}:8084/api/empleado/2",
+									"raw": "{{microservices_url}}:8084/api/empleado/1",
 									"host": [
 										"{{microservices_url}}"
 									],
@@ -737,7 +744,7 @@
 									"path": [
 										"api",
 										"empleado",
-										"2"
+										"1"
 									]
 								}
 							},
