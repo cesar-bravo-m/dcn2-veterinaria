@@ -20,7 +20,7 @@ public class DatabaseService {
         
         String sql = "SELECT documento_id, documento_tipo_id, impuesto_id, documento_numero, " +
                     "documento_fecha, registro_fecha, usuario_id " +
-                    "FROM documento ORDER BY documento_id";
+                    "FROM documentos ORDER BY documento_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -37,7 +37,7 @@ public class DatabaseService {
     public DocumentoDTO getDocumentoById(Long documentoId) throws SQLException {
         String sql = "SELECT documento_id, documento_tipo_id, impuesto_id, documento_numero, " +
                     "documento_fecha, registro_fecha, usuario_id " +
-                    "FROM documento WHERE documento_id = ?";
+                    "FROM documentos WHERE documento_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -111,7 +111,7 @@ public class DatabaseService {
     }
     
     public boolean deleteDocumento(Long documentoId) throws SQLException {
-        String sql = "DELETE FROM documento WHERE documento_id = ?";
+        String sql = "DELETE FROM documentos WHERE documento_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
