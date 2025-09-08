@@ -11,12 +11,12 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "vt_historial")
+@Table(name = "historial")
 public class Historial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "historial_seq")
-    @SequenceGenerator(name = "historial_seq", sequenceName = "vt_historial_historial_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "historial_seq", sequenceName = "historial_historial_id_seq", allocationSize = 1)
     @Column(name = "historial_id")
     private Long historialId;
     @Column(name = "mascota_id")

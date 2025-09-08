@@ -11,7 +11,7 @@ import java.util.List;
 
 public class DatabaseService {
     
-    private static final String DB_URL = "jdbc:postgresql://40.67.145.51:5432/duoc";
+    private static final String DB_URL = "jdbc:postgresql://20.81.232.159:5432/duoc";
     private static final String DB_USER = "duoc";
     private static final String DB_PASSWORD = "84oL4mK6cM8w7SK";
     
@@ -19,7 +19,7 @@ public class DatabaseService {
         List<MensajeDTO> mensajes = new ArrayList<>();
         
         String sql = "SELECT mensaje_id, cliente_id, fecha_envio, contenido, estado " +
-                    "FROM vt_mensajes ORDER BY mensaje_id";
+                    "FROM mensajes ORDER BY mensaje_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -35,7 +35,7 @@ public class DatabaseService {
     
     public MensajeDTO getMensajeById(Long mensajeId) throws SQLException {
         String sql = "SELECT mensaje_id, cliente_id, fecha_envio, contenido, estado " +
-                    "FROM vt_mensajes WHERE mensaje_id = ?";
+                    "FROM mensajes WHERE mensaje_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -55,7 +55,7 @@ public class DatabaseService {
         List<MensajeDTO> mensajes = new ArrayList<>();
         
         String sql = "SELECT mensaje_id, cliente_id, fecha_envio, contenido, estado " +
-                    "FROM vt_mensajes WHERE cliente_id = ? ORDER BY fecha_envio DESC";
+                    "FROM mensajes WHERE cliente_id = ? ORDER BY fecha_envio DESC";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -75,7 +75,7 @@ public class DatabaseService {
         List<MensajeDTO> mensajes = new ArrayList<>();
         
         String sql = "SELECT mensaje_id, cliente_id, fecha_envio, contenido, estado " +
-                    "FROM vt_mensajes WHERE estado = ? ORDER BY fecha_envio DESC";
+                    "FROM mensajes WHERE estado = ? ORDER BY fecha_envio DESC";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -92,7 +92,7 @@ public class DatabaseService {
     }
     
     public MensajeDTO createMensaje(MensajeDTO mensaje) throws SQLException {
-        String sql = "INSERT INTO vt_mensajes (cliente_id, fecha_envio, contenido, estado) " +
+        String sql = "INSERT INTO mensajes (cliente_id, fecha_envio, contenido, estado) " +
                     "VALUES (?, ?, ?, ?) RETURNING mensaje_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -120,7 +120,7 @@ public class DatabaseService {
     }
     
     public boolean updateMensaje(MensajeDTO mensaje) throws SQLException {
-        String sql = "UPDATE vt_mensajes SET cliente_id = ?, fecha_envio = ?, " +
+        String sql = "UPDATE mensajes SET cliente_id = ?, fecha_envio = ?, " +
                     "contenido = ?, estado = ? WHERE mensaje_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -144,7 +144,7 @@ public class DatabaseService {
     }
     
     public boolean deleteMensaje(Long mensajeId) throws SQLException {
-        String sql = "DELETE FROM vt_mensajes WHERE mensaje_id = ?";
+        String sql = "DELETE FROM mensajes WHERE mensaje_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

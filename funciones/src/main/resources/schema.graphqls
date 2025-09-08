@@ -1,0 +1,18 @@
+type Cliente {
+    clienteId: ID!
+    nombre: String
+    paterno: String
+    materno: String
+    rut: String
+}
+
+type Query {
+    clientes: [Cliente]
+    clienteById(id: ID!): Cliente
+}
+
+type Mutation {
+    createCliente(nombre: String!, paterno: String!, materno: String!, rut: String!): Cliente
+    updateCliente(clienteId: ID!, nombre: String, paterno: String, materno: String, rut: String): Boolean
+    deleteCliente(clienteId: ID!): Boolean
+}

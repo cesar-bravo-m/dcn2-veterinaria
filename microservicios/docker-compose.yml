@@ -6,7 +6,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DB_HOST: ${DB_HOST:-40.67.145.51}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -14,6 +14,9 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   # Historial Service - Port 8082
   historial:
@@ -22,7 +25,7 @@ services:
     ports:
       - "8082:8082"
     environment:
-      DB_HOST: ${DB_HOST:-40.67.145.51}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -30,6 +33,9 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   # Agenda Service - Port 8083
   agenda:
@@ -38,7 +44,7 @@ services:
     ports:
       - "8083:8083"
     environment:
-      DB_HOST: ${DB_HOST:-40.67.145.51}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -46,6 +52,9 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      postgres:
+        condition: service_healthy
 
   # Empleados Service - Port 8084
   empleados:
@@ -54,7 +63,7 @@ services:
     ports:
       - "8084:8084"
     environment:
-      DB_HOST: ${DB_HOST:-40.67.145.51}
+      DB_HOST: ${DB_HOST:-postgres}
       DB_PORT: ${DB_PORT:-5432}
       DB_NAME: ${DB_NAME:-duoc}
       DB_USER: ${DB_USER:-duoc}
@@ -62,6 +71,33 @@ services:
     restart: always
     networks:
       - vet-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  postgres:
+    image: postgres:17
+    container_name: cloud2-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: duoc
+      POSTGRES_PASSWORD: 84oL4mK6cM8w7SK
+      POSTGRES_DB: duoc
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./esquema.sql:/docker-entrypoint-initdb.d/esquema.sql:ro
+    ports:
+      - "5432:5432"
+    networks:
+      - vet-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U duoc -d duoc"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata:
 
 networks:
   vet-network:

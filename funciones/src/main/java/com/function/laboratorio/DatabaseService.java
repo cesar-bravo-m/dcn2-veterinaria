@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DatabaseService {
     
-    private static final String DB_URL = "jdbc:postgresql://40.67.145.51:5432/duoc";
+    private static final String DB_URL = "jdbc:postgresql://20.81.232.159:5432/duoc";
     private static final String DB_USER = "duoc";
     private static final String DB_PASSWORD = "84oL4mK6cM8w7SK";
     
@@ -29,7 +29,7 @@ public class DatabaseService {
         List<LaboratorioDTO> laboratorios = new ArrayList<>();
         
         String sql = "SELECT laboratorio_id, mascota_id, fecha, examen, resultado, valor, unidad " +
-                    "FROM vt_laboratorio ORDER BY fecha DESC, laboratorio_id";
+                    "FROM laboratorio ORDER BY fecha DESC, laboratorio_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -45,7 +45,7 @@ public class DatabaseService {
     
     public LaboratorioDTO getLaboratorioById(Long laboratorioId) throws SQLException {
         String sql = "SELECT laboratorio_id, mascota_id, fecha, examen, resultado, valor, unidad " +
-                    "FROM vt_laboratorio WHERE laboratorio_id = ?";
+                    "FROM laboratorio WHERE laboratorio_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -65,7 +65,7 @@ public class DatabaseService {
         List<LaboratorioDTO> laboratorios = new ArrayList<>();
         
         String sql = "SELECT laboratorio_id, mascota_id, fecha, examen, resultado, valor, unidad " +
-                    "FROM vt_laboratorio WHERE mascota_id = ? ORDER BY fecha DESC, laboratorio_id";
+                    "FROM laboratorio WHERE mascota_id = ? ORDER BY fecha DESC, laboratorio_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -85,7 +85,7 @@ public class DatabaseService {
         List<LaboratorioDTO> laboratorios = new ArrayList<>();
         
         String sql = "SELECT laboratorio_id, mascota_id, fecha, examen, resultado, valor, unidad " +
-                    "FROM vt_laboratorio WHERE LOWER(examen) LIKE LOWER(?) ORDER BY fecha DESC, laboratorio_id";
+                    "FROM laboratorio WHERE LOWER(examen) LIKE LOWER(?) ORDER BY fecha DESC, laboratorio_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -102,7 +102,7 @@ public class DatabaseService {
     }
     
     public LaboratorioDTO createLaboratorio(LaboratorioDTO laboratorio) throws SQLException {
-        String sql = "INSERT INTO vt_laboratorio (mascota_id, fecha, examen, resultado, valor, unidad) " +
+        String sql = "INSERT INTO laboratorio (mascota_id, fecha, examen, resultado, valor, unidad) " +
                     "VALUES (?, ?, ?, ?, ?, ?) RETURNING laboratorio_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -138,7 +138,7 @@ public class DatabaseService {
     }
     
     public boolean updateLaboratorio(LaboratorioDTO laboratorio) throws SQLException {
-        String sql = "UPDATE vt_laboratorio SET mascota_id = ?, fecha = ?, examen = ?, " +
+        String sql = "UPDATE laboratorio SET mascota_id = ?, fecha = ?, examen = ?, " +
                     "resultado = ?, valor = ?, unidad = ? WHERE laboratorio_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -170,7 +170,7 @@ public class DatabaseService {
     }
     
     public boolean deleteLaboratorio(Long laboratorioId) throws SQLException {
-        String sql = "DELETE FROM vt_laboratorio WHERE laboratorio_id = ?";
+        String sql = "DELETE FROM laboratorio WHERE laboratorio_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

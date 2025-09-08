@@ -10,14 +10,14 @@ import java.util.List;
 
 public class DatabaseService {
     
-    private static final String DB_URL = "jdbc:postgresql://40.67.145.51:5432/duoc";
+    private static final String DB_URL = "jdbc:postgresql://20.81.232.159:5432/duoc";
     private static final String DB_USER = "duoc";
     private static final String DB_PASSWORD = "84oL4mK6cM8w7SK";
     
     public List<ClienteDTO> getAllClientes() throws SQLException {
         List<ClienteDTO> clientes = new ArrayList<>();
         
-        String sql = "SELECT cliente_id, nombre, paterno, materno, rut from vt_clientes";
+        String sql = "SELECT cliente_id, nombre, paterno, materno, rut from clientes";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -32,7 +32,7 @@ public class DatabaseService {
     }
     
     public ClienteDTO getClienteById(Long clienteId) throws SQLException {
-        String sql = "SELECT cliente_id, nombre, paterno, materno, rut FROM vt_clientes WHERE cliente_id = ?";
+        String sql = "SELECT cliente_id, nombre, paterno, materno, rut FROM clientes WHERE cliente_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -49,8 +49,8 @@ public class DatabaseService {
     }
     
     public ClienteDTO createCliente(ClienteDTO cliente) throws SQLException {
-        String sql = "INSERT INTO vt_clientes (nombre, paterno, materno, rut) " +
-                    "VALUES (?, ?, ?, ?) RETURNING cliente_id";
+        String sql = "INSERT INTO clientes (cliente_id, nombre, paterno, materno, rut) " +
+                    "VALUES (nextval('clientes_cliente_id_seq'), ?, ?, ?, ?) RETURNING cliente_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -71,7 +71,7 @@ public class DatabaseService {
     }
     
     public boolean updateCliente(ClienteDTO cliente) throws SQLException {
-        String sql = "UPDATE vt_clientes SET nombre = ?, paterno = ?, materno = ?, rut = ? " +
+        String sql = "UPDATE clientes SET nombre = ?, paterno = ?, materno = ?, rut = ? " +
                     "WHERE cliente_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -89,7 +89,7 @@ public class DatabaseService {
     }
     
     public boolean deleteCliente(Long clienteId) throws SQLException {
-        String sql = "DELETE FROM vt_clientes WHERE cliente_id = ?";
+        String sql = "DELETE FROM clientes WHERE cliente_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

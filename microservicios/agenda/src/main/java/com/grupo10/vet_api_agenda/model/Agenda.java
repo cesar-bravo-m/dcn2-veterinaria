@@ -11,12 +11,12 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "vt_agenda")
+@Table(name = "agenda")
 public class Agenda {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "agenda_seq")
-    @SequenceGenerator(name = "agenda_seq", sequenceName = "vt_agenda_agenda_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "agenda_seq", sequenceName = "agenda_agenda_id_seq", allocationSize = 1)
     @Column(name = "agenda_id")
     private Long agendaId;
     @Column(name = "mascota_id")

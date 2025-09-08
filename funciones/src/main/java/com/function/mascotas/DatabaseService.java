@@ -10,7 +10,7 @@ import java.util.List;
 
 public class DatabaseService {
     
-    private static final String DB_URL = "jdbc:postgresql://40.67.145.51:5432/duoc";
+    private static final String DB_URL = "jdbc:postgresql://20.81.232.159:5432/duoc";
     private static final String DB_USER = "duoc";
     private static final String DB_PASSWORD = "84oL4mK6cM8w7SK";
     
@@ -29,7 +29,7 @@ public class DatabaseService {
         List<MascotaDTO> mascotas = new ArrayList<>();
         
         String sql = "SELECT mascota_id, cliente_id, nombre, especie, edad, domestico " +
-                    "FROM vt2_mascotas ORDER BY mascota_id";
+                    "FROM mascotas ORDER BY mascota_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -45,7 +45,7 @@ public class DatabaseService {
     
     public MascotaDTO getMascotaById(Long mascotaId) throws SQLException {
         String sql = "SELECT mascota_id, cliente_id, nombre, especie, edad, domestico " +
-                    "FROM vt2_mascotas WHERE mascota_id = ?";
+                    "FROM mascotas WHERE mascota_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -65,7 +65,7 @@ public class DatabaseService {
         List<MascotaDTO> mascotas = new ArrayList<>();
         
         String sql = "SELECT mascota_id, cliente_id, nombre, especie, edad, domestico " +
-                    "FROM vt2_mascotas WHERE cliente_id = ? ORDER BY mascota_id";
+                    "FROM mascotas WHERE cliente_id = ? ORDER BY mascota_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -82,7 +82,7 @@ public class DatabaseService {
     }
     
     public MascotaDTO createMascota(MascotaDTO mascota) throws SQLException {
-        String sql = "INSERT INTO vt2_mascotas (cliente_id, nombre, especie, edad, domestico) " +
+        String sql = "INSERT INTO mascotas (cliente_id, nombre, especie, edad, domestico) " +
                     "VALUES (?, ?, ?, ?, ?) RETURNING mascota_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -111,7 +111,7 @@ public class DatabaseService {
     }
     
     public boolean updateMascota(MascotaDTO mascota) throws SQLException {
-        String sql = "UPDATE vt2_mascotas SET cliente_id = ?, nombre = ?, especie = ?, " +
+        String sql = "UPDATE mascotas SET cliente_id = ?, nombre = ?, especie = ?, " +
                     "edad = ?, domestico = ? WHERE mascota_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
@@ -136,7 +136,7 @@ public class DatabaseService {
     }
     
     public boolean deleteMascota(Long mascotaId) throws SQLException {
-        String sql = "DELETE FROM vt2_mascotas WHERE mascota_id = ?";
+        String sql = "DELETE FROM mascotas WHERE mascota_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

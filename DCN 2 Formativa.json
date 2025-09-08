@@ -1,0 +1,1230 @@
+{
+	"info": {
+		"_postman_id": "501cc78e-b790-4aea-8dea-c44eccbb1f31",
+		"name": "DCN 2 Formativa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26434356"
+	},
+	"item": [
+		{
+			"name": "Azure Functions",
+			"item": [
+				{
+					"name": "Clientes (GraphQL)",
+					"item": [
+						{
+							"name": "Get All Clientes",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"query { clientes { clienteId nombre paterno materno rut } }\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/graphqlClientes?",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"graphqlClientes"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Cliente by ID",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"query { clienteById(id: \\\"1\\\") { clienteId nombre paterno materno rut } }\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/graphqlClientes?",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"graphqlClientes"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Cliente",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"mutation { createCliente(nombre: \\\"Juan\\\", paterno: \\\"Pérez\\\", materno: \\\"González\\\", rut: \\\"12345678-9\\\") { clienteId nombre paterno materno rut } }\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/graphqlClientes?",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"graphqlClientes"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Cliente",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"mutation { updateCliente(clienteId: \\\"1\\\", nombre: \\\"Juan Carlos\\\", paterno: \\\"Pérez\\\", materno: \\\"González\\\", rut: \\\"12345678-9\\\") }\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/graphqlClientes?",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"graphqlClientes"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Cliente",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"query\": \"mutation { deleteCliente(clienteId: \\\"1\\\") }\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/graphqlClientes?",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"graphqlClientes"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Mascotas (REST)",
+					"item": [
+						{
+							"name": "Get All Mascotas",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Mascotas",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Mascotas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Mascota by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Mascotas?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Mascotas"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Mascota",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cliente_id\": 1,\n    \"nombre\": \"Firulais\",\n    \"especie\": \"Perro\",\n    \"edad\": 3,\n    \"domestico\": true\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Mascotas",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Mascotas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Mascota",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mascota_id\": 1,\n    \"cliente_id\": 1,\n    \"nombre\": \"Firulais Jr\",\n    \"especie\": \"Perro\",\n    \"edad\": 4,\n    \"domestico\": true\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Mascotas?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Mascotas"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Mascota",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Mascotas?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Mascotas"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Laboratorio (REST)",
+					"item": [
+						{
+							"name": "Get All Laboratorio",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Laboratorio",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Laboratorio"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Laboratorio by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Laboratorio?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Laboratorio"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Laboratorio",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mascota_id\": 1,\n    \"fecha\": \"2024-01-15T10:30:00\",\n    \"examen\": \"Hemograma\",\n    \"resultado\": \"Normal\",\n    \"valor\": 12.5,\n    \"unidad\": \"mg/dL\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Laboratorio",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Laboratorio"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Laboratorio",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"laboratorio_id\": 1,\n    \"mascota_id\": 1,\n    \"fecha\": \"2024-01-15T10:30:00\",\n    \"examen\": \"Hemograma Completo\",\n    \"resultado\": \"Valores normales\",\n    \"valor\": 13.0,\n    \"unidad\": \"mg/dL\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Laboratorio?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Laboratorio"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Laboratorio",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Laboratorio?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Laboratorio"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Comunicacion (REST)",
+					"item": [
+						{
+							"name": "Get All Mensajes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Comunicacion",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Comunicacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Mensaje by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Comunicacion?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Mensaje",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cliente_id\": 1,\n    \"fecha_envio\": \"2024-01-15T14:30:00\",\n    \"contenido\": \"Recordatorio de cita veterinaria mañana a las 10:00 AM\",\n    \"estado\": \"ENVIADO\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Comunicacion",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Comunicacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Mensaje",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mensaje_id\": 1,\n    \"cliente_id\": 1,\n    \"fecha_envio\": \"2024-01-15T14:30:00\",\n    \"contenido\": \"Recordatorio de cita veterinaria mañana a las 10:00 AM - CONFIRMADO\",\n    \"estado\": \"LEIDO\"\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Comunicacion?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Mensaje",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Comunicacion?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Comunicacion"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Facturas (REST)",
+					"item": [
+						{
+							"name": "Get All Documentos",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Facturas",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Facturas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Documento by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Facturas?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Facturas"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Documento",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"documento_tipo_id\": 1,\n    \"impuesto_id\": 1,\n    \"documento_numero\": 12345,\n    \"documento_fecha\": \"2024-01-15T16:00:00\",\n    \"registro_fecha\": \"2024-01-15T16:00:00\",\n    \"usuario_id\": 1\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Facturas",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Facturas"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Documento",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"documento_id\": 1,\n    \"documento_tipo_id\": 1,\n    \"impuesto_id\": 1,\n    \"documento_numero\": 12346,\n    \"documento_fecha\": \"2024-01-15T16:00:00\",\n    \"registro_fecha\": \"2024-01-15T16:05:00\",\n    \"usuario_id\": 1\n}"
+								},
+								"url": {
+									"raw": "{{functions_url}}/api/Facturas?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Facturas"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Documento",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{functions_url}}/api/Facturas?id=1",
+									"host": [
+										"{{functions_url}}"
+									],
+									"path": [
+										"api",
+										"Facturas"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Microservicios",
+			"item": [
+				{
+					"name": "Empleados API",
+					"item": [
+						{
+							"name": "Get All Empleados",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8084/api/empleado",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"empleado"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Empleado by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8084/api/empleado/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"empleado",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Empleado",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nombres\": \"María\",\n    \"paterno\": \"González\",\n    \"materno\": \"López\",\n    \"rut\": \"98765432-1\",\n    \"cargoId\": 1,\n    \"pacienteFlag\": false,\n    \"funcionarioFlag\": true,\n    \"registroFecha\": \"2024-01-15T10:00:00\"\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8084/api/empleado",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"empleado"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Empleado",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"nombres\": \"María José\",\n    \"paterno\": \"González\",\n    \"materno\": \"López\",\n    \"rut\": \"98765432-1\",\n    \"cargoId\": 2,\n    \"pacienteFlag\": false,\n    \"funcionarioFlag\": true,\n    \"registroFecha\": \"2024-01-15T10:00:00\"\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8084/api/empleado/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"empleado",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Empleado",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8084/api/empleado/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8084",
+									"path": [
+										"api",
+										"empleado",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Agenda API",
+					"item": [
+						{
+							"name": "Get All Agenda",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8083/api/agenda",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"agenda"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Agenda by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8083/api/agenda/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"agenda",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Agenda",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mascotaId\": 1,\n    \"fecha\": \"2024-01-20T10:00:00\",\n    \"nuloFlag\": false,\n    \"nuloFecha\": null,\n    \"registroFecha\": \"2024-01-15T14:00:00\",\n    \"usuarioId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8083/api/agenda",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"agenda"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Agenda",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mascotaId\": 1,\n    \"fecha\": \"2024-01-20T11:00:00\",\n    \"nuloFlag\": false,\n    \"nuloFecha\": null,\n    \"registroFecha\": \"2024-01-15T14:00:00\",\n    \"usuarioId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8083/api/agenda/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"agenda",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Agenda",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8083/api/agenda/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8083",
+									"path": [
+										"api",
+										"agenda",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Inventario API",
+					"item": [
+						{
+							"name": "Get All Inventario",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8081/api/inventario",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"inventario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Inventario by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8081/api/inventario/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"inventario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Inventario",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"inventarioTipoId\": 1,\n    \"nombre\": \"Vacuna Antirrábica\",\n    \"medidaUnidadId\": 1,\n    \"stock\": 50,\n    \"usuarioId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8081/api/inventario",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"inventario"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Inventario",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"inventarioTipoId\": 1,\n    \"nombre\": \"Vacuna Antirrábica Premium\",\n    \"medidaUnidadId\": 1,\n    \"stock\": 45,\n    \"usuarioId\": 1\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8081/api/inventario/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"inventario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Inventario",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8081/api/inventario/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8081",
+									"path": [
+										"api",
+										"inventario",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Historial API",
+					"item": [
+						{
+							"name": "Get All Historial",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8082/api/historial",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"historial"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Historial by ID",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8082/api/historial/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"historial",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Create Historial",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mascotaId\": 1,\n    \"inventarioId\": 1,\n    \"cantidad\": 1,\n    \"dosisCantidad\": 2,\n    \"registroFecha\": \"2024-01-15\"\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8082/api/historial",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"historial"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Historial",
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"mascotaId\": 1,\n    \"inventarioId\": 1,\n    \"cantidad\": 1,\n    \"dosisCantidad\": 3,\n    \"registroFecha\": \"2024-01-15\"\n}"
+								},
+								"url": {
+									"raw": "{{microservices_url}}:8082/api/historial/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"historial",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Delete Historial",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{microservices_url}}:8082/api/historial/1",
+									"host": [
+										"{{microservices_url}}"
+									],
+									"port": "8082",
+									"path": [
+										"api",
+										"historial",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "microservices_url",
+			"value": "http://localhost"
+		},
+		{
+			"key": "functions_url",
+			"value": "http://localhost:7071/api"
+		}
+	]
+}

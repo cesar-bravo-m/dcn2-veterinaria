@@ -9,12 +9,12 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "vt_inventario")
+@Table(name = "inventario")
 public class Inventario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "inventario_seq")
-    @SequenceGenerator(name = "inventario_seq", sequenceName = "vt_inventario_inventario_id_seq", allocationSize = 1)
+    @SequenceGenerator(name = "inventario_seq", sequenceName = "inventario_inventario_id_seq", allocationSize = 1)
     @Column(name = "inventario_id")
     private Long inventarioId;
     @Column(name = "inventario_tipo_id")
