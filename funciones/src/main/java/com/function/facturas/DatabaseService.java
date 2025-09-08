@@ -20,7 +20,7 @@ public class DatabaseService {
         
         String sql = "SELECT documento_id, documento_tipo_id, impuesto_id, documento_numero, " +
                     "documento_fecha, registro_fecha, usuario_id " +
-                    "FROM vt_documento ORDER BY documento_id";
+                    "FROM documento ORDER BY documento_id";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -37,7 +37,7 @@ public class DatabaseService {
     public DocumentoDTO getDocumentoById(Long documentoId) throws SQLException {
         String sql = "SELECT documento_id, documento_tipo_id, impuesto_id, documento_numero, " +
                     "documento_fecha, registro_fecha, usuario_id " +
-                    "FROM vt_documento WHERE documento_id = ?";
+                    "FROM documento WHERE documento_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -54,7 +54,7 @@ public class DatabaseService {
     }
     
     public DocumentoDTO createDocumento(DocumentoDTO documento) throws SQLException {
-        String sql = "INSERT INTO vt_documento (documento_tipo_id, impuesto_id, documento_numero, " +
+        String sql = "INSERT INTO documento (documento_tipo_id, impuesto_id, documento_numero, " +
                     "documento_fecha, registro_fecha, usuario_id) " +
                     "VALUES (?, ?, ?, ?, ?, ?) RETURNING documento_id";
         
@@ -85,7 +85,7 @@ public class DatabaseService {
     }
     
     public boolean updateDocumento(DocumentoDTO documento) throws SQLException {
-        String sql = "UPDATE vt_documento SET documento_tipo_id = ?, impuesto_id = ?, " +
+        String sql = "UPDATE documento SET documento_tipo_id = ?, impuesto_id = ?, " +
                     "documento_numero = ?, documento_fecha = ?, usuario_id = ? " +
                     "WHERE documento_id = ?";
         
@@ -111,7 +111,7 @@ public class DatabaseService {
     }
     
     public boolean deleteDocumento(Long documentoId) throws SQLException {
-        String sql = "DELETE FROM vt_documento WHERE documento_id = ?";
+        String sql = "DELETE FROM documento WHERE documento_id = ?";
         
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement stmt = conn.prepareStatement(sql)) {

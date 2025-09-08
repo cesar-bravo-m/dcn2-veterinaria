@@ -15,7 +15,7 @@ CREATE TABLE mascotas (
     domestico BOOLEAN
 );
 
-CREATE TABLE vt_persona (
+CREATE TABLE persona (
     persona_id BIGSERIAL PRIMARY KEY,
     nombres VARCHAR(255),
     paterno VARCHAR(255),
@@ -27,7 +27,7 @@ CREATE TABLE vt_persona (
     registro_fecha TIMESTAMP
 );
 
-CREATE TABLE vt_inventario (
+CREATE TABLE inventario (
     inventario_id BIGSERIAL PRIMARY KEY,
     inventario_tipo_id BIGINT,
     nombre VARCHAR(255),
@@ -36,7 +36,7 @@ CREATE TABLE vt_inventario (
     usuario_id BIGINT
 );
 
-CREATE TABLE vt_historial (
+CREATE TABLE historial (
     historial_id BIGSERIAL PRIMARY KEY,
     mascota_id BIGINT,
     inventario_id BIGINT,
@@ -45,7 +45,7 @@ CREATE TABLE vt_historial (
     registro_fecha DATE
 );
 
-CREATE TABLE vt_agenda (
+CREATE TABLE agenda (
     agenda_id BIGSERIAL PRIMARY KEY,
     mascota_id BIGINT,
     fecha TIMESTAMP,
@@ -84,8 +84,8 @@ CREATE TABLE documentos (
 );
 
 ALTER TABLE mascotas ADD CONSTRAINT fk_mascotas_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id);
-ALTER TABLE vt_historial ADD CONSTRAINT fk_historial_mascota FOREIGN KEY (mascota_id) REFERENCES mascotas(mascota_id);
-ALTER TABLE vt_historial ADD CONSTRAINT fk_historial_inventario FOREIGN KEY (inventario_id) REFERENCES vt_inventario(inventario_id);
-ALTER TABLE vt_agenda ADD CONSTRAINT fk_agenda_mascota FOREIGN KEY (mascota_id) REFERENCES mascotas(mascota_id);
+ALTER TABLE historial ADD CONSTRAINT fk_historial_mascota FOREIGN KEY (mascota_id) REFERENCES mascotas(mascota_id);
+ALTER TABLE historial ADD CONSTRAINT fk_historial_inventario FOREIGN KEY (inventario_id) REFERENCES inventario(inventario_id);
+ALTER TABLE agenda ADD CONSTRAINT fk_agenda_mascota FOREIGN KEY (mascota_id) REFERENCES mascotas(mascota_id);
 ALTER TABLE laboratorio ADD CONSTRAINT fk_laboratorio_mascota FOREIGN KEY (mascota_id) REFERENCES mascotas(mascota_id);
 ALTER TABLE mensajes ADD CONSTRAINT fk_mensajes_cliente FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id);
